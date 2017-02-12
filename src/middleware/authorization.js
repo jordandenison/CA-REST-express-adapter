@@ -6,7 +6,7 @@ const jwt = require('express-jwt')
 /**
  * Internal dependencies
  */
-const { jwtSecret: secret, unprotectedRoutes } = require('src/lib/config')
+const { jwtSecret: secret, unprotectedRoutes } = require('../../src/lib/config')
 
 module.exports = {
   jwtCheck:

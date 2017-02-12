@@ -2,12 +2,13 @@
  * External dependencies
  */
 const winston = require('winston')
-const { StatusCodeError } = require('request-promise-core/errors')
 
 /**
  * Internal dependencies
  */
-const { BadRequestError, NotFoundError } = require('src/lib/errors')
+const { BadRequestError, NotFoundError } = require('./lib/errors')
+
+const notFoundRegexp = /not found/
 
 module.exports = {
   errorHandler: (req, res) => e => { // TODO: refactor/clean up
@@ -15,10 +16,8 @@ module.exports = {
 
     if (e instanceof BadRequestError) {
       status = 400
-    } else if (e instanceof NotFoundError) {
+    } else if (e instanceof NotFoundError || e.message === 'model not found' || notFoundRegexp.test(e.message)) {
       status = 404
-    } else if (e instanceof StatusCodeError) {
-      status = e.statusCode
     }
 
     winston.error(`http error: ${e.stack}`)
@@ -30,7 +29,7 @@ module.exports = {
         const message = JSON.stringify(JSON.parse(e.message))
         return res.status(422).end(message)
       } catch (e) {
-        return res.sendStatus(status)
+        return res.status(status).end(e.stack)
       }
     }
   }

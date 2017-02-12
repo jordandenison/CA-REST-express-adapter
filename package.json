@@ -2,7 +2,7 @@
   "name": "ca-rest-express-adapter",
   "version": "0.0.1",
   "description": "REST plugin for Clean Architecture using express.js",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "lint": "standard --fix",
     "test": "nyc ava 'src/**/*.test.js' --verbose"
@@ -17,21 +17,21 @@
     "url": "https://github.com/jordandenison/CA-REST-express-adapter/issues"
   },
   "homepage": "https://github.com/jordandenison/CA-REST-express-adapter#readme",
-  "devDependencies": {
-    "app-module-path": "^2.2.0",
+  "dependencies": {
     "argon2": "^0.15.0",
-    "ava": "^0.17.0",
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
     "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.2.1",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
     "nodemon": "^1.11.0",
     "nyc": "^10.0.0",
     "proxyquire": "^1.7.10",
-    "request-promise-core": "^1.1.1",
     "sinon": "^1.17.7",
     "standard": "^8.6.0",
-    "supertest": "^2.0.1",
-    "winston": "^2.3.1"
+    "supertest": "^2.0.1"
   }
 }

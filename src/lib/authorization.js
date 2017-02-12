@@ -9,8 +9,8 @@ const winston = require('winston')
 /**
  * Internal dependencies
  */
-const { jwtSecret } = require('src/lib/config')
-const { UnauthorizedError } = require('src/lib/errors')
+const { jwtSecret } = require('../../src/lib/config')
+const { UnauthorizedError } = require('../../src/lib/errors')
 
 Promise.promisifyAll(jwt)
 

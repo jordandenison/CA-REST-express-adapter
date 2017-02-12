@@ -6,12 +6,12 @@ const bodyParser = require('body-parser')
 /**
  * Internal dependencies
  */
-const { serverExceptionHandler } = require('src/lib/errors')
-const authorization = require('src/middleware/authorization')
-const notFound = require('src/controllers/not-found')
-const robots = require('src/controllers/robots')
-const root = require('src/controllers/root')
-const domainController = require('src/controllers/domain')
+const { serverExceptionHandler } = require('./lib/errors')
+const authorization = require('./middleware/authorization')
+const notFound = require('./controllers/not-found')
+const robots = require('./controllers/robots')
+const root = require('./controllers/root')
+const domainController = require('./controllers/domain')
 
 const getRegexp = /get/i
 

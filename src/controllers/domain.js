@@ -6,15 +6,13 @@ const { omit, upperFirst } = require('lodash/fp')
 /**
  * Internal dependencies
  */
-const { errorHandler } = require('src/controllers')
+const { errorHandler } = require('../controllers')
 
 module.exports = {
-  getInfo (domain, executor, getById) {
+  getById (domain, executor, getById) {
     return (req, res) => {
-      const { id } = req.params
-
       executor.query(`get${upperFirst(domain)}ById`, {
-        id,
+        id: req.params.id,
         getById,
         respond: result => res.json({ result }),
         errorHandler: errorHandler(req, res)
@@ -65,7 +63,7 @@ module.exports = {
   remove (domain, executor, remove) {
     return (req, res) => {
       executor.run(`delete${upperFirst(domain)}`, {
-        id: req.params,
+        id: req.params.id,
         remove,
         respond: () => res.sendStatus(204),
         errorHandler: errorHandler(req, res)

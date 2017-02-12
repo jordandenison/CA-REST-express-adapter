@@ -1,5 +1,3 @@
-require('app-module-path').addPath(__dirname + '/../../') // eslint-disable-line
-
 /**
  * External dependencies
  */
@@ -12,15 +10,15 @@ const proxyquire = require('proxyquire')
 /**
  * Internal dependencies
  */
-proxyquire('src/controllers', {
+proxyquire('..//controllers', {
   'winston': {
     error: () => {}
   }
 })
 
 const currentUser = 'testuuid'
-proxyquire('src/routes', {
-  'src/middleware/authorization': {
+proxyquire('../routes', {
+  './middleware/authorization': {
     jwtCheck: (req, res, next) => {
       req.user = { id: currentUser }
       next()

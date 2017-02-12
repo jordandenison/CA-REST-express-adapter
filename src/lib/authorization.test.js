@@ -1,5 +1,3 @@
-require('app-module-path').addPath(__dirname + '/../../') // eslint-disable-line
-
 /**
  * External dependencies
  */
@@ -19,7 +17,7 @@ const testPasswordInput = 'password'
 /**
  * SUT
  */
-const authorization = proxyquire('src/lib/authorization', {
+const authorization = proxyquire('./authorization', {
   'bluebird': {
     promisifyAll: () => {}
   },

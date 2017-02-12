@@ -1,5 +1,3 @@
-require('app-module-path').addPath(__dirname + '/../') // eslint-disable-line
-
 /**
  * External dependencies
  */
@@ -10,7 +8,7 @@ const proxyquire = require('proxyquire')
 /**
  * Internal dependencies
  */
-proxyquire('src/controllers', {
+proxyquire('./controllers', {
   'winston': {
     error: () => {}
   }
@@ -30,7 +28,7 @@ const initOptions = {
 /**
  * SUT
  */
-const server = proxyquire('index', {
+const server = proxyquire('./index', {
   'winston': {
     info: () => {},
     error: () => {}
