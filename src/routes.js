@@ -16,9 +16,9 @@ const domainController = require('./controllers/domain')
 const getRegexp = /get/i
 
 module.exports = {
-  initMiddleware (app) {
+  initMiddleware (app, options) {
     app.use(bodyParser.json())
-    app.use(authorization.jwtCheck, authorization.getCurrentUser)
+    app.use(authorization.jwtCheck(options), authorization.getCurrentUser)
   },
 
   initCustomRoutes (app, customRoutes) {
@@ -32,10 +32,10 @@ module.exports = {
   initCrudRoutes ({ app, executor, domains, services, options }) {
     Object.keys(domains).forEach(domain => {
       app.get(`/${domain}`, domainController.getList(domain, executor, services[domain].getList))
-      app.get('/comment/:id', domainController.getById(domain, executor, services[domain].getById))
-      app.post('/comment', domainController.create(domain, executor, services[domain].create))
-      app.put('/comment/:id', domainController.edit(domain, executor, services[domain].edit))
-      app.delete('/comment/:id', domainController.remove(domain, executor, services[domain].remove))
+      app.get(`/${domain}/:id`, domainController.getById(domain, executor, services[domain].getById))
+      app.post(`/${domain}`, domainController.create(domain, executor, services[domain].create))
+      app.put(`/${domain}/:id`, domainController.edit(domain, executor, services[domain].edit))
+      app.delete(`/${domain}/:id`, domainController.remove(domain, executor, services[domain].remove))
     })
   },
 

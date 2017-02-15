@@ -21,7 +21,7 @@ module.exports = {
   },
 
   init ({ executor, domains, services, options }) {
-    routes.initMiddleware(app)
+    routes.initMiddleware(app, options)
     routes.initCrudRoutes({ app, executor, domains, services, options })
     routes.initCustomRoutes(app, customRoutes)
     routes.initStandardRoutes(app)

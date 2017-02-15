@@ -3,17 +3,13 @@
  */
 const jwt = require('express-jwt')
 
-/**
- * Internal dependencies
- */
-const { jwtSecret: secret, unprotectedRoutes } = require('../../src/lib/config')
-
 module.exports = {
-  jwtCheck:
-    jwt({ credentialsRequired: true, secret })
-      .unless({ path: unprotectedRoutes }),
+  jwtCheck ({ jwtSecret, unprotectedRoutes }) {
+   return jwt({ credentialsRequired: true, secret: jwtSecret })
+      .unless({ path: unprotectedRoutes })
+  },
 
-  getCurrentUser: (req, res, next) => {
+  getCurrentUser (req, res, next) {
     next()
   }
 }
