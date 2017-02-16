@@ -28,8 +28,8 @@ module.exports = {
       try {
         const message = JSON.stringify(JSON.parse(e.message))
         return res.status(422).end(message)
-      } catch (e) {
-        return res.status(status).end(e.stack)
+      } catch (_) {
+        return res.status(status).end(status === 500 ? e.stack : '')
       }
     }
   }

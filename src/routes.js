@@ -2,6 +2,7 @@
  * External dependencies
  */
 const bodyParser = require('body-parser')
+const express = require('express')
 
 /**
  * Internal dependencies
@@ -19,6 +20,10 @@ module.exports = {
   initMiddleware (app, options) {
     app.use(bodyParser.json())
     app.use(authorization.jwtCheck(options), authorization.getCurrentUser)
+
+    if (options.exposeDocs) {
+      app.use('/docs', express.static(options.exposeDocs))
+    }
   },
 
   initCustomRoutes (app, customRoutes) {
