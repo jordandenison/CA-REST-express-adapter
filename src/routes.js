@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+const { defaults } = require('lodash/fp')
 const bodyParser = require('body-parser')
 const express = require('express')
 
@@ -8,6 +9,7 @@ const express = require('express')
  * Internal dependencies
  */
 const { serverExceptionHandler } = require('./lib/errors')
+const { errorHandler } = require('./controllers')
 const authorization = require('./middleware/authorization')
 const notFound = require('./controllers/not-found')
 const robots = require('./controllers/robots')
@@ -29,7 +31,13 @@ module.exports = {
   initCustomRoutes (app, customRoutes) {
     customRoutes.forEach(({ method, path, executor, useCase, port }) => {
       app[method](path, (req, res) => {
-        executor[getRegexp.test(method) ? 'query' : 'run'](useCase, port(req, res))
+        executor[getRegexp.test(method) ? 'query' : 'run'](
+          useCase,
+          defaults({
+            respond: () => res.status(200).end(),
+            errorHandler: errorHandler(req, res)
+          }, port(req, res))
+        )
       })
     })
   },
