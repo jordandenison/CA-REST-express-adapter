@@ -12,6 +12,7 @@ module.exports = {
   getById (domain, executor, getById) {
     return (req, res) => {
       executor.query(`get${upperFirst(domain)}ById`, {
+        currentUser: req.user,
         id: req.params.id,
         getById,
         respond: result => res.json({ result }),
@@ -22,11 +23,13 @@ module.exports = {
 
   getList (domain, executor, getList) {
     return (req, res) => {
+      const currentUser = req.user
       const { page, limit } = req.query
       const options = { page, limit }
       const query = omit([ 'page', 'limit' ], req.query)
 
       executor.query(`get${upperFirst(domain)}List`, {
+        currentUser,
         query,
         options,
         getList,
@@ -39,7 +42,7 @@ module.exports = {
   create (domain, executor, create) {
     return (req, res) => {
       executor.run(`create${upperFirst(domain)}`, {
-        currentUser: req.user.id,
+        currentUser: req.user,
         data: req.body,
         create,
         respond: result => res.status(201).json({ result }),
@@ -51,6 +54,7 @@ module.exports = {
   edit (domain, executor, edit) {
     return (req, res) => {
       executor.run(`edit${upperFirst(domain)}`, {
+        currentUser: req.user,
         id: req.params.id,
         data: req.body,
         edit,
@@ -63,6 +67,7 @@ module.exports = {
   remove (domain, executor, remove) {
     return (req, res) => {
       executor.run(`delete${upperFirst(domain)}`, {
+        currentUser: req.user,
         id: req.params.id,
         remove,
         respond: () => res.sendStatus(204),
